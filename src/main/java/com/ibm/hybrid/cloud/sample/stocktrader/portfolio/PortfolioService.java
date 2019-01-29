@@ -374,7 +374,7 @@ public class PortfolioService extends Application {
 		} else {
 			releaseResults(results);
 
-			throw new NotFoundException("No such portfolio: "+owner); //send back a 404
+			// *MAK* throw new NotFoundException("No such portfolio: "+owner); //send back a 404
 		}
 
 		logger.fine("Returning "+((portfolio==null) ? "null" : portfolio.toString()));
