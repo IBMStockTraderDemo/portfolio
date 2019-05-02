@@ -244,8 +244,11 @@ public class PortfolioService extends Application {
 //	@RolesAllowed({"StockTrader", "StockViewer"}) //Couldn't get this to work; had to do it through the web.xml instead :(
 	public Portfolio getPortfolio(@PathParam("owner") String owner, @Context HttpServletRequest request) throws IOException, SQLException {
 		Portfolio newPortfolio = null;
+		String leakMemory = System.getenv("MEMORY_LEAK");
 
-		createMemoryLeak(owner);
+		if (leakMemory != null && leakMemory.equals("on")) {
+			createMemoryLeak(owner);
+		}
 		
 		Portfolio oldPortfolio = getPortfolioWithoutStocks(owner); //throws a 404 if not found
 		if (oldPortfolio != null) {
