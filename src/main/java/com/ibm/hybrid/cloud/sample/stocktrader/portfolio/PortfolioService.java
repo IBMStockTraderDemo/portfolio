@@ -246,10 +246,13 @@ public class PortfolioService extends Application {
 		Portfolio newPortfolio = null;
 		String leakMemory = System.getenv("MEMORY_LEAK");
 
+
 		if (leakMemory != null && leakMemory.equals("on")) {
 			createMemoryLeak(owner);
 		}
-		
+
+		generateLatency(owner);
+
 		Portfolio oldPortfolio = getPortfolioWithoutStocks(owner); //throws a 404 if not found
 		if (oldPortfolio != null) {
 			String oldLoyalty = oldPortfolio.getLoyalty();
@@ -804,4 +807,17 @@ public class PortfolioService extends Application {
 			            + initFreeMemory + " Current Free Memory: " + currentFreeMemory );
 		}
 	}
+
+	public void generateLatency(String owner) {
+	long latency = 4000;
+	if(owner != null && owner.equalsIgnoreCase("LT")) {
+		try {
+			logger.info("Owner: " + owner +  ", sleeping for " + latency  + "ms...");
+			Thread.sleep(latency);
+			logger.info("Sleep complete.");
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+}
 }
